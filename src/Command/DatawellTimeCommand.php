@@ -6,7 +6,6 @@ use App\Service\DataWell\SearchService;
 use ItkDev\MetricsBundle\Service\MetricsService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -28,7 +27,6 @@ class DatawellTimeCommand extends Command
 
     protected function configure(): void
     {
-        $this->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -55,10 +53,10 @@ class DatawellTimeCommand extends Command
 
             if ($output->isVerbose()) {
                 $io->error('Datewell service connection error');
+
+                return Command::FAILURE;
             }
         }
-
-
 
         return Command::SUCCESS;
     }
