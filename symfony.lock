@@ -1,4 +1,10 @@
 {
+    "itk-dev/metrics-bundle": {
+        "version": "0.0.1"
+    },
+    "promphp/prometheus_client_php": {
+        "version": "v2.4.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
