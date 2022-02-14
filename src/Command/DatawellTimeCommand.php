@@ -28,32 +28,37 @@ class DatawellTimeCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
-        ;
+        $this->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
-        $stopwatch = new Stopwatch(true);
+        try {
+            $stopwatch = new Stopwatch(true);
+            $stopwatch->start('request');
+            $result = $this->searchService->search('facet.type=ebog');
+            $event = $stopwatch->stop('request');
+            $seconds = $event->getDuration() / 1000;
 
-        if ($input->getOption('option1')) {
-            // ...
+            $this->metricsService->histogram('datawell_search_duration_seconds', '', $seconds);
+            $this->metricsService->histogram('datawell_reported_duration_seconds', '', $result[3]);
+            $this->metricsService->gauge('datawell_up', 'Is datawell service online', 1);
+
+            if ($output->isVerbose()) {
+                $io->success('Request time: ' . $seconds . ', Reported time: ' . $result[3]);
+            }
+
+        } catch (\Exception $exception) {
+            $this->metricsService->gauge('datawell_up', 'Is datawell service online', 0);
+
+            if ($output->isVerbose()) {
+                $io->error('Datewell service connection error');
+            }
         }
 
-        $stopwatch->start('request');
-        $result = $this->searchService->search('facet.type=ebog');
-        $event = $stopwatch->stop('request');
-        $seconds = $event->getDuration() / 1000;
 
-        $this->metricsService->histogram('datawell_search_duration_seconds', '', $seconds);
-        $this->metricsService->histogram('datawell_reported_duration_seconds', '', $result[3]);
-
-        if ($output->isVerbose()) {
-            $io->success('Request time: ' . $seconds . ', Reported time: ' . $result[3]);
-        }
 
         return Command::SUCCESS;
     }
