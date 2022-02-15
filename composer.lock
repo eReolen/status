@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1ce9df978b9ea240b315bc4b88a394a",
+    "content-hash": "bc4dbcd92dab998c64a054dd1cbe8a03",
     "packages": [
         {
             "name": "itk-dev/metrics-bundle",
