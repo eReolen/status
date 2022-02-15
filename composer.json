@@ -1,6 +1,8 @@
 {
+    "name": "ereolen/status",
+    "description": "Symfony application to expose metrics for a status page",
     "type": "project",
-    "license": "proprietary",
+    "license": "AGPL-3.0-only",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
