@@ -5,14 +5,10 @@
  * Handle search at the data well to utilize hasCover relations.
  */
 
-namespace App\Service\DataWell;
+namespace App\Service;
 
 use App\Exception\DataWellVendorException;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -58,9 +54,10 @@ class SearchService
      *
      * @return array
      *
-     * @throws DataWellVendorException Throws DataWellVendorException on network error
-     *
-     * @psalm-return array{0: array, 1: bool, 2: int}
+     * @throws DataWellVendorException
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function search(string $query, int $offset = 1): array
     {
@@ -82,7 +79,7 @@ class SearchService
                        <open:profile>' . $this->profile . '</open:profile>
                        <open:allObjects>0</open:allObjects>
                        <open:authentication>
-                          <open:groupIdAut>' . $this->agency . '</open:groupIdAut>
+                          <open:groupIdAut>775100</open:groupIdAut>
                           <open:passwordAut>' . $this->password . '</open:passwordAut>
                           <open:userIdAut>' . $this->user . '</open:userIdAut>
                        </open:authentication>
@@ -99,6 +96,11 @@ class SearchService
 
             $content = $response->getContent();
             $jsonResponse = json_decode($content, true);
+
+            // Handle errors in the request.
+            if (isset($jsonResponse['searchResponse']['error']['$'])) {
+                throw new DataWellVendorException($jsonResponse['searchResponse']['error']['$']);
+            }
 
             if (array_key_exists('searchResult', $jsonResponse['searchResponse']['result'])) {
                 if ($jsonResponse['searchResponse']['result']['hitCount']['$']) {

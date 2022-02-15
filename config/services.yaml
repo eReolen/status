@@ -17,6 +17,10 @@ services:
             $bindDataWellUrl: '%env(string:DATAWELL_VENDOR_SEARCH_URL)%'
             $bindDataWellUser: '%env(string:DATAWELL_VENDOR_USER)%'
             $bindDataWellPassword: '%env(string:DATAWELL_VENDOR_PASSWORD)%'
+            $bindPublizonUrl: '%env(string:PUBLIZON_URL)%'
+            $bindPublizonRetailerId: '%env(int:PUBLIZON_RETAILER_ID)%'
+            $bindPublizonRetailerKeyCode: '%env(string:PUBLIZON_RETAILER_KEYCODE)%'
+            $bindPublizonClientId: '%env(string:PUBLIZON_CLIENT_ID)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

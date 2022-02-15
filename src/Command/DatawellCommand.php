@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Service\DataWell\SearchService;
+use App\Service\SearchService;
 use ItkDev\MetricsBundle\Service\MetricsService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Stopwatch\Stopwatch;
 
-class DatawellTimeCommand extends Command
+class DatawellCommand extends Command
 {
     protected static $defaultName = 'app:datawell:stats';
     protected static $defaultDescription = 'Get time for data well connection';
@@ -20,9 +20,10 @@ class DatawellTimeCommand extends Command
 
     public function __construct(SearchService $searchService, MetricsService $metricsService)
     {
-        parent::__construct();
         $this->searchService = $searchService;
         $this->metricsService = $metricsService;
+
+        parent::__construct();
     }
 
     protected function configure(): void
@@ -47,12 +48,10 @@ class DatawellTimeCommand extends Command
             if ($output->isVerbose()) {
                 $io->success('Request time: ' . $seconds . ', Reported time: ' . $result[3]);
             }
-
         } catch (\Exception $exception) {
             $this->metricsService->gauge('datawell_up', 'Is datawell service online', 0);
-
             if ($output->isVerbose()) {
-                $io->error('Datewell service connection error');
+                $io->error('Datewell error: ' . $exception->getMessage());
 
                 return Command::FAILURE;
             }
