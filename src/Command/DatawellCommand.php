@@ -46,12 +46,12 @@ class DatawellCommand extends Command
             $this->metricsService->gauge('datawell_up', 'Is datawell service online', 1);
 
             if ($output->isVerbose()) {
-                $io->success('Request time: ' . $seconds . ', Reported time: ' . $result[3]);
+                $io->success('Request time: '.$seconds.', Reported time: '.$result[3]);
             }
         } catch (\Exception $exception) {
             $this->metricsService->gauge('datawell_up', 'Is datawell service online', 0);
             if ($output->isVerbose()) {
-                $io->error('Datewell error: ' . $exception->getMessage());
+                $io->error('Datewell error: '.$exception->getMessage());
 
                 return Command::FAILURE;
             }

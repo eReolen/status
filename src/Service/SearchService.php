@@ -28,7 +28,6 @@ class SearchService
 
     /**
      * @param HttpClientInterface $httpClient
-     *
      * @param string $bindDataWellAgency
      * @param string $bindDataWellProfile
      * @param string $bindDataWellUrl
@@ -74,18 +73,18 @@ class SearchService
                  <soapenv:Header/>
                  <soapenv:Body>
                     <open:searchRequest>
-                       <open:query>' . $query . '</open:query>
-                       <open:agency>' . $this->agency . '</open:agency>
-                       <open:profile>' . $this->profile . '</open:profile>
+                       <open:query>'.$query.'</open:query>
+                       <open:agency>'.$this->agency.'</open:agency>
+                       <open:profile>'.$this->profile.'</open:profile>
                        <open:allObjects>0</open:allObjects>
                        <open:authentication>
                           <open:groupIdAut>775100</open:groupIdAut>
-                          <open:passwordAut>' . $this->password . '</open:passwordAut>
-                          <open:userIdAut>' . $this->user . '</open:userIdAut>
+                          <open:passwordAut>'.$this->password.'</open:passwordAut>
+                          <open:userIdAut>'.$this->user.'</open:userIdAut>
                        </open:authentication>
                        <open:objectFormat>dkabm</open:objectFormat>
-                       <open:start>' . $offset . '</open:start>
-                       <open:stepValue>' . $this::SEARCH_LIMIT . '</open:stepValue>
+                       <open:start>'.$offset.'</open:start>
+                       <open:stepValue>'.$this::SEARCH_LIMIT.'</open:stepValue>
                        <open:allRelations>1</open:allRelations>
                     <open:relationData>uri</open:relationData>
                     <outputType>json</outputType>
