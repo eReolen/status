@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Service\DatawellService;
+use App\Service\DatawellStatsService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,9 +13,9 @@ class DatawellCommand extends Command
     protected static $defaultName = 'app:datawell:stats';
     protected static $defaultDescription = 'Get time for data well connection';
 
-    private DatawellService $searchService;
+    private DatawellStatsService $searchService;
 
-    public function __construct(DatawellService $searchService)
+    public function __construct(DatawellStatsService $searchService)
     {
         $this->searchService = $searchService;
 

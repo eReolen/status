@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Service\PublizonService;
+use App\Service\PublizonStatsService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,9 +13,9 @@ class PublizonCommand extends Command
     protected static $defaultName = 'app:publizon:stats';
     protected static $defaultDescription = 'Get connection stats for publizon service';
 
-    private PublizonService $publizonService;
+    private PublizonStatsService $publizonService;
 
-    public function __construct(PublizonService $ereolenService)
+    public function __construct(PublizonStatsService $ereolenService)
     {
         $this->publizonService = $ereolenService;
 

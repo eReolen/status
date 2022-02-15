@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Service\EreolenService;
+use App\Service\EreolenStatsService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,9 +13,9 @@ class EreolenCommand extends Command
     protected static $defaultName = 'app:ereolen:stats';
     protected static $defaultDescription = 'Get connection stats for ereolen homepage';
 
-    private EreolenService $ereolenService;
+    private EreolenStatsService $ereolenService;
 
-    public function __construct(EreolenService $ereolenService)
+    public function __construct(EreolenStatsService $ereolenService)
     {
         $this->ereolenService = $ereolenService;
 

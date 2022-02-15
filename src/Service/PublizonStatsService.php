@@ -6,7 +6,7 @@ use ItkDev\MetricsBundle\Service\MetricsService;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class PublizonService implements ServiceInterface
+class PublizonStatsService implements StatsServiceInterface
 {
     private HttpClientInterface $client;
     private string $url;

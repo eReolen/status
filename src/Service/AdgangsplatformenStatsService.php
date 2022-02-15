@@ -4,7 +4,7 @@ namespace App\Service;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class FBSService implements ServiceInterface
+class AdgangsplatformenStatsService implements StatsServiceInterface
 {
     private HttpClientInterface $client;
 

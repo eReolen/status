@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-interface ServiceInterface
+interface StatsServiceInterface
 {
     public function stats(): array;
 }

@@ -16,7 +16,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * Class SearchService.
  */
-class DatawellService implements ServiceInterface
+class DatawellStatsService implements StatsServiceInterface
 {
     public const SEARCH_LIMIT = 50;
 

@@ -7,7 +7,7 @@ use ItkDev\MetricsBundle\Service\MetricsService;
 use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class EreolenService implements ServiceInterface
+class EreolenStatsService implements StatsServiceInterface
 {
     private HttpClientInterface $client;
     private string $ereolenUrl;
@@ -21,8 +21,6 @@ class EreolenService implements ServiceInterface
     public function __construct(HttpClientInterface $client, MetricsService $metricsService, string $bindEreolenUrl, string $bindEreolenGoUrl, string $bindEreolenFeed)
     {
         $this->client = $client;
-
-        // Feeds
 
         $this->ereolenUrl = $bindEreolenUrl;
         $this->ereolenGoUrl = $bindEreolenGoUrl;
@@ -136,9 +134,9 @@ class EreolenService implements ServiceInterface
     private function testFeed($url): int
     {
         $response = $this->client->request('GET', $url, []);
-
-        if (200 !== $response->getStatusCode()) {
-            throw new EreolenException('Connection error');
+        $code = $response->getStatusCode();
+        if (200 !== $code) {
+            throw new EreolenException('Connection error', $code);
         }
 
         $content = $response->getContent();
