@@ -2,15 +2,18 @@
 
 namespace App\Service;
 
+use ItkDev\MetricsBundle\Service\MetricsService;
+use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class PublizonService
+class PublizonService implements ServiceInterface
 {
     private HttpClientInterface $client;
     private string $url;
     private int $retailerId;
     private string $retailerKeyCode;
     private string $clientId;
+    private MetricsService $metricsService;
 
     /**
      * @param HttpClientInterface $client
@@ -19,13 +22,14 @@ class PublizonService
      * @param string $bindPublizonRetailerKeyCode
      * @param string $bindPublizonClientId
      */
-    public function __construct(HttpClientInterface $client, string $bindPublizonUrl, int $bindPublizonRetailerId, string $bindPublizonRetailerKeyCode, string $bindPublizonClientId)
+    public function __construct(HttpClientInterface $client, MetricsService $metricsService, string $bindPublizonUrl, int $bindPublizonRetailerId, string $bindPublizonRetailerKeyCode, string $bindPublizonClientId)
     {
         $this->client = $client;
         $this->url = $bindPublizonUrl;
         $this->retailerId = $bindPublizonRetailerId;
         $this->retailerKeyCode = $bindPublizonRetailerKeyCode;
         $this->clientId = $bindPublizonClientId;
+        $this->metricsService = $metricsService;
     }
 
     /**
@@ -38,7 +42,7 @@ class PublizonService
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function getLibraryProfile()
+    private function getLibraryProfile()
     {
         $response = $this->client->request('POST', $this->url, [
             'headers' => [
@@ -59,5 +63,28 @@ class PublizonService
         $content = $response->getContent();
 
         return simplexml_load_string($content);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function stats(): array
+    {
+        try {
+            $stopwatch = new Stopwatch(true);
+            $stopwatch->start('request');
+            $this->getLibraryProfile();
+            $event = $stopwatch->stop('request');
+            $seconds = $event->getDuration() / 1000;
+
+            $this->metricsService->histogram('publizon_duration_seconds', '', $seconds);
+            $this->metricsService->gauge('publizon_up', 'Is Publizon service online', 1);
+        } catch (\Exception $exception) {
+            $this->metricsService->gauge('publizon_up', 'Is Publizon service online', 0);
+
+            throw $exception;
+        }
+
+        return ['request' => $seconds];
     }
 }

@@ -9,6 +9,7 @@
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "ext-redis": "*",
         "ext-simplexml": "*",
         "itk-dev/metrics-bundle": "^0.0.1",

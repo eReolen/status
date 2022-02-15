@@ -8,13 +8,15 @@
 namespace App\Service;
 
 use App\Exception\DataWellVendorException;
+use ItkDev\MetricsBundle\Service\MetricsService;
+use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class SearchService.
  */
-class SearchService
+class DatawellService implements ServiceInterface
 {
     public const SEARCH_LIMIT = 50;
 
@@ -25,6 +27,7 @@ class SearchService
     private string $searchURL;
     private string $password;
     private string $user;
+    private MetricsService $metricsService;
 
     /**
      * @param HttpClientInterface $httpClient
@@ -34,7 +37,7 @@ class SearchService
      * @param string $bindDataWellUser
      * @param string $bindDataWellPassword
      */
-    public function __construct(HttpClientInterface $httpClient, string $bindDataWellAgency, string $bindDataWellProfile, string $bindDataWellUrl, string $bindDataWellUser, string $bindDataWellPassword)
+    public function __construct(HttpClientInterface $httpClient, MetricsService $metricsService, string $bindDataWellAgency, string $bindDataWellProfile, string $bindDataWellUrl, string $bindDataWellUser, string $bindDataWellPassword)
     {
         $this->client = $httpClient;
 
@@ -43,6 +46,7 @@ class SearchService
         $this->searchURL = $bindDataWellUrl;
         $this->user = $bindDataWellUser;
         $this->password = $bindDataWellPassword;
+        $this->metricsService = $metricsService;
     }
 
     /**
@@ -58,7 +62,7 @@ class SearchService
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function search(string $query, int $offset = 1): array
+    private function search(string $query, int $offset = 1): array
     {
         // Validate that the service configuration have been set.
         if (empty($this->searchURL) || empty($this->user) || empty($this->password)) {
@@ -127,7 +131,7 @@ class SearchService
      * @return array
      *   Array of all pid => url pairs found in response
      */
-    public function mergeData(array $json): array
+    private function mergeData(array $json): array
     {
         $data = [];
 
@@ -139,5 +143,34 @@ class SearchService
         }
 
         return $data;
+    }
+
+    /**
+     * @return array
+     *
+     * @throws DataWellVendorException
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function stats(): array
+    {
+        try {
+            $stopwatch = new Stopwatch(true);
+            $stopwatch->start('request');
+            $result = $this->search('facet.type=ebog');
+            $event = $stopwatch->stop('request');
+            $seconds = $event->getDuration() / 1000;
+
+            $this->metricsService->histogram('datawell_search_duration_seconds', '', $seconds);
+            $this->metricsService->histogram('datawell_reported_duration_seconds', '', $result[3]);
+            $this->metricsService->gauge('datawell_up', 'Is datawell service online', 1);
+        } catch (\Exception $exception) {
+            $this->metricsService->gauge('datawell_up', 'Is datawell service online', 0);
+
+            throw $exception;
+        }
+
+        return ['request' => $seconds, 'reported' => $result[3]];
     }
 }

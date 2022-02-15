@@ -21,6 +21,9 @@ services:
             $bindPublizonRetailerId: '%env(int:PUBLIZON_RETAILER_ID)%'
             $bindPublizonRetailerKeyCode: '%env(string:PUBLIZON_RETAILER_KEYCODE)%'
             $bindPublizonClientId: '%env(string:PUBLIZON_CLIENT_ID)%'
+            $bindEreolenUrl: '%env(string:EREOLEN_URL)%'
+            $bindEreolenGoUrl: '%env(string:EREOLENGO_URL)%'
+            $bindEreolenFeed: '%env(string:EREOLEN_FEED)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
