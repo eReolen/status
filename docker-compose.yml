@@ -50,7 +50,10 @@ services:
       - '6379'
 
   prometheus:
-    image: prom/prometheus:v2.33.3
+    image: prom/prometheus
+    depends_on:
+      - nginx
+      - grafana
     networks:
       - app
       - frontend

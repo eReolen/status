@@ -8,8 +8,8 @@ itkdev_metrics:
 
     # Connection options is only used by redis adapter
     options:
-      host: redis
-      port: 6379
+      host: '%env(string:REDIS_HOST)%'
+      port: '%env(int:REDIS_PORT)%'
       password: ~
 
   # Export metrics for these extensions
