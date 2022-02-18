@@ -41,7 +41,7 @@ class FBSStatsService implements StatsServiceInterface
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     public function stats(): array
     {
