@@ -21,7 +21,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -99,14 +99,15 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "V5Pjzeank"
+            "uid": "PRj_w4B7z"
           },
           "exemplar": true,
           "expr": "histogram_quantile(0.50, sum(rate(eReolenApp_publizon_duration_seconds_bucket[5m])) by (le))",
@@ -167,12 +168,12 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "8.3.6",
+      "pluginVersion": "8.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "V5Pjzeank"
+            "uid": "PRj_w4B7z"
           },
           "exemplar": true,
           "expr": "eReolenApp_ereolen_feed_total",
@@ -184,7 +185,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "V5Pjzeank"
+            "uid": "PRj_w4B7z"
           },
           "exemplar": true,
           "expr": "eReolenApp_ereolengo_feed_total",
@@ -267,14 +268,15 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "V5Pjzeank"
+            "uid": "PRj_w4B7z"
           },
           "exemplar": true,
           "expr": "histogram_quantile(0.50, sum(rate(eReolenApp_datawell_search_duration_seconds_bucket[5m])) by (le))",
@@ -285,7 +287,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "V5Pjzeank"
+            "uid": "PRj_w4B7z"
           },
           "exemplar": true,
           "expr": "histogram_quantile(0.50, sum(rate(eReolenApp_datawell_reported_duration_seconds_bucket[5m])) by (le))",
@@ -296,6 +298,104 @@
         }
       ],
       "title": "Date well search time",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PRj_w4B7z"
+          },
+          "exemplar": true,
+          "expr": "histogram_quantile(0.50, sum(rate(eReolenApp_fbs_rest_duration_seconds_bucket[5m])) by (le))",
+          "interval": "",
+          "legendFormat": "Rest",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PRj_w4B7z"
+          },
+          "exemplar": true,
+          "expr": "histogram_quantile(0.50, sum(rate(eReolenApp_fbs_sip2_duration_seconds_bucket[5m])) by (le))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "SIP2",
+          "refId": "B"
+        }
+      ],
+      "title": "FBS",
       "type": "timeseries"
     },
     {
@@ -363,12 +463,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.6",
+      "pluginVersion": "8.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "V5Pjzeank"
+            "uid": "PRj_w4B7z"
           },
           "exemplar": true,
           "expr": "eReolenApp_ereolen_up",
@@ -445,12 +545,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.6",
+      "pluginVersion": "8.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "V5Pjzeank"
+            "uid": "PRj_w4B7z"
           },
           "exemplar": true,
           "expr": "eReolenApp_ereolengo_up",
@@ -538,7 +638,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.6",
+      "pluginVersion": "8.4.0",
       "targets": [
         {
           "$$hashKey": "object:41",
@@ -547,7 +647,7 @@
           "crit": 0,
           "datasource": {
             "type": "prometheus",
-            "uid": "V5Pjzeank"
+            "uid": "PRj_w4B7z"
           },
           "decimals": 2,
           "displayAliasType": "Warning / Critical",
@@ -572,6 +672,13 @@
           "color": {
             "mode": "thresholds"
           },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "",
+              "url": "https://libraryservices.pubhub.dk/"
+            }
+          ],
           "mappings": [
             {
               "options": {
@@ -587,6 +694,7 @@
               "type": "value"
             }
           ],
+          "noValue": "Down",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -624,12 +732,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.6",
+      "pluginVersion": "8.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "V5Pjzeank"
+            "uid": "PRj_w4B7z"
           },
           "exemplar": true,
           "expr": "eReolenApp_publizon_up",
@@ -640,23 +748,297 @@
       ],
       "title": "Publizon online",
       "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PRj_w4B7z"
+          },
+          "exemplar": true,
+          "expr": "histogram_quantile(0.50, sum(rate(eReolenApp_ereolen_headers_duration_seconds_bucket[5m])) by (le))",
+          "interval": "",
+          "legendFormat": "eReolen",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PRj_w4B7z"
+          },
+          "exemplar": true,
+          "expr": "histogram_quantile(0.50, sum(rate(eReolenApp_ereolen_feed_duration_seconds_bucket[5m])) by (le))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "eReolen (feed)",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PRj_w4B7z"
+          },
+          "exemplar": true,
+          "expr": "histogram_quantile(0.50, sum(rate(eReolenApp_ereolengo_headers_duration_seconds_bucket[5m])) by (le))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "eReolenGo",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PRj_w4B7z"
+          },
+          "exemplar": true,
+          "expr": "histogram_quantile(0.50, sum(rate(eReolenApp_ereolengo_feed_duration_seconds_bucket[5m])) by (le))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "eReolenGo (feed)",
+          "refId": "D"
+        }
+      ],
+      "title": "eReolen(Go)",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "Down"
+                },
+                "1": {
+                  "index": 1,
+                  "text": "Up"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "noValue": "Down",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 0,
+        "y": 21
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PRj_w4B7z"
+          },
+          "exemplar": true,
+          "expr": "eReolenApp_fbs_rest_up",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "FBS Rest Online",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "Down"
+                },
+                "1": {
+                  "index": 1,
+                  "text": "Up"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "noValue": "Down",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 3,
+        "y": 21
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PRj_w4B7z"
+          },
+          "exemplar": true,
+          "expr": "eReolenApp_fbs_sip2_up",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "FBS SIP2 Online",
+      "type": "stat"
     }
   ],
-  "refresh": "",
-  "schemaVersion": 34,
+  "refresh": "1m",
+  "schemaVersion": 35,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Status",
   "uid": "szorW6-7z",
-  "version": 39,
+  "version": 13,
   "weekStart": ""
 }

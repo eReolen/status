@@ -20,6 +20,13 @@ class FBSStatsService implements StatsServiceInterface
 
     /**
      * @param HttpClientInterface $client
+     * @param MetricsService $metricsService
+     * @param string $bindFBSsip2Url
+     * @param string $bindFBSsip2Username
+     * @param string $bindFBSsip2Password
+     * @param string $bindFBSApiUrl
+     * @param string $bindFBSApiUsername
+     * @param string $bindFBSApiPassword
      */
     public function __construct(HttpClientInterface $client, MetricsService $metricsService, string $bindFBSsip2Url, string $bindFBSsip2Username, string $bindFBSsip2Password, string $bindFBSApiUrl, string $bindFBSApiUsername, string $bindFBSApiPassword)
     {
@@ -33,6 +40,9 @@ class FBSStatsService implements StatsServiceInterface
         $this->FBSApiPassword = $bindFBSApiPassword;
     }
 
+    /**
+     * @{inheritDoc}
+     */
     public function stats(): array
     {
         $exceptions = [];
