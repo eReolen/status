@@ -9,19 +9,6 @@ networks:
     internal: false
 
 services:
-  mariadb:
-    image: itkdev/mariadb:latest
-    networks:
-      - app
-    ports:
-      - '3306'
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_USER=db
-      - MYSQL_PASSWORD=db
-      - MYSQL_DATABASE=db
-      #- ENCRYPT=1 # Uncomment to enable database encryption.
-
   phpfpm:
     image: itkdev/php7.4-fpm:latest
     networks:
@@ -31,11 +18,10 @@ services:
       - XDEBUG_SESSION=${XDEBUG_SESSION:-0}
       - PHP_MAX_EXECUTION_TIME=30
       - PHP_MEMORY_LIMIT=256M
+      - PHP_IDE_CONFIG=serverName=localhost
       # - PHP_MAIL=1 # Uncomment to enable mailhog.
       - DOCKER_HOST_DOMAIN=${COMPOSE_DOMAIN}
       - COMPOSER_VERSION=2
-    depends_on:
-      - mariadb
     volumes:
       - nfsApp:/app:delegated
 
@@ -55,14 +41,35 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
-  
+
   redis:
     image: 'redis:6'
     networks:
       - app
     ports:
       - '6379'
-      
+
+  prometheus:
+    image: prom/prometheus
+    depends_on:
+      - nginx
+      - grafana
+    networks:
+      - app
+      - frontend
+    ports:
+      - '9090'
+    volumes:
+      - ${PWD}/.docker/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    image: grafana/grafana-oss
+    networks:
+      - app
+      - frontend
+    ports:
+      - '3000'
+
   mailhog:
     image: mailhog/mailhog
     networks:

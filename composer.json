@@ -1,20 +1,26 @@
 {
+    "name": "ereolen/status",
+    "description": "Symfony application to expose metrics for a status page",
     "type": "project",
-    "license": "proprietary",
+    "license": "AGPL-3.0-only",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
+        "ext-redis": "*",
+        "ext-simplexml": "*",
+        "itk-dev/metrics-bundle": "^0.0.1",
         "symfony/console": "5.4.*",
         "symfony/dotenv": "5.4.*",
         "symfony/flex": "^1.17|^2",
         "symfony/framework-bundle": "5.4.*",
+        "symfony/http-client": "5.4.*",
         "symfony/runtime": "5.4.*",
+        "symfony/stopwatch": "5.4.*",
         "symfony/yaml": "5.4.*"
-    },
-    "require-dev": {
     },
     "config": {
         "allow-plugins": {
@@ -53,6 +59,12 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "coding-standards-check": [
+            "php-cs-fixer --config=.php-cs-fixer.dist.php fix --dry-run --format=checkstyle"
+        ],
+        "coding-standards-apply": [
+            "php-cs-fixer --config=.php-cs-fixer.dist.php fix"
         ]
     },
     "conflict": {
@@ -63,5 +75,9 @@
             "allow-contrib": false,
             "require": "5.4.*"
         }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.6",
+        "symfony/maker-bundle": "^1.36"
     }
 }

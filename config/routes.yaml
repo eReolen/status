@@ -1,3 +1,3 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+itkdev_metrics:
+#  prefix: '/custom/path/prefix'
+  resource: '@ItkDevMetricsBundle/Resources/config/routes.xml'
